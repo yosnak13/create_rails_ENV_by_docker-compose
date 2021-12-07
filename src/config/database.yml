@@ -27,6 +27,8 @@ development:
 test:
   <<: *default
   database: app_test
+  # circleCiで環境変数でAPPDATABASEがセットされていた場合、セットされた値を使用。それがなければdb
+  host: <%= ENV.fetch("APP_DATABASE_HOST") { "db" } %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
