@@ -6,20 +6,20 @@ jobs:
   build:
     docker:
       - image: circleci/ruby:2.7
-      working_directory: ~/create_rails_ENV_by_docker-compose/src
-      steps:
+    working_directory: ~/create_rails_ENV_by_docker-compose/src
+    steps:
       - checkout:
-        path: ~/create_rails_ENV_by_docker-compose
+          path: ~/create_rails_ENV_by_docker-compose
       - ruby/install-deps
 
   test:
     docker:
-     - image: circleci/ruby:2.7
-     - image: circleci/mysql:5.5
-      environment:
-        MYSQL_ROOT_PASSWORD: password
-        MYSQL_DATABASE: app_test
-        MYSQL_USER: root
+      - image: circleci/ruby:2.7
+      - image: circleci/mysql:5.5
+        environment:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: app_test
+          MYSQL_USER: root
     environment:
       BUNDLE_JOBS: "3"
       BUNDLE_RETRY: "3"
@@ -31,17 +31,17 @@ jobs:
           path: ~/create_rails_ENV_by_docker-compose
       - ruby/install-deps
       - run:
-        name: Database set
-        command: bundle exec rails db:migrate
+          name: Database set
+          command: bundle exec rails db:migrate
       - run:
-        name: test
-        command: bundle exec rake test
+          name: test
+          command: bundle exec rake test
 
 workflows:
-  versions: 2
+  version: 2
   build_and_test:
     jobs:
       - build
       - test:
-        requires:
-          - build
+          requires:
+            - build
